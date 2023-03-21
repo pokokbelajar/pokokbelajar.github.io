@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="id" prefix="og: https://ogp.me/ns#">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cara Kerja Server Gojek Mencari Driver - BELAJAR</title>
+    <meta name="description" content="Cara Kerja Server Gojek Mencari Driver, , , , , , , 0, Psst..Intip Cara Kerja Server Gojek Dalam Menangani Orderan, tipkerja.com, 1500 x 768, jpeg, , 20, cara-kerja-server-gojek-mencari-driver, BELAJAR" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cara Kerja Server Gojek Mencari Driver - BELAJAR" />
+    <meta property="og:description" content="Cara Kerja Server Gojek Mencari Driver, , , , , , , 0, Psst..Intip Cara Kerja Server Gojek Dalam Menangani Orderan, tipkerja.com, 1500 x 768, jpeg, , 20, cara-kerja-server-gojek-mencari-driver, BELAJAR" />
+    <meta property="og:site_name" content="BELAJAR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cara Kerja Server Gojek Mencari Driver - BELAJAR" />
+    <meta name="twitter:description" content="Cara Kerja Server Gojek Mencari Driver, , , , , , , 0, Psst..Intip Cara Kerja Server Gojek Dalam Menangani Orderan, tipkerja.com, 1500 x 768, jpeg, , 20, cara-kerja-server-gojek-mencari-driver, BELAJAR" />
+    <link rel='stylesheet' id='generate-style-css' href='https://pokokbelajar.github.io/css/main.min.css'?ver=3.2.4'
+        media='all' />
+    <link rel='stylesheet' id='ez-toc-css' href='https://pokokbelajar.github.io/css/screen.min.css'?ver=2.0.40' media='all' />
+    <style id='generate-style-inline-css'>
+        body {
+            background-color: #f7f7f7;
+            color: #222222;
+        }
+
+        a {
+            color: #1e73be;
+        }
+
+        a:hover,
+        a:focus,
+        a:active {
+            color: #000000;
+        }
+
+        .wp-block-group__inner-container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .generate-back-to-top {
+            font-size: 20px;
+            border-radius: 3px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            line-height: 40px;
+            width: 40px;
+            text-align: center;
+            z-index: 10;
+            transition: opacity 300ms ease-in-out;
+            opacity: 0.1;
+            transform: translateY(1000px);
+        }
+
+        .generate-back-to-top__show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navigation-search {
+            position: absolute;
+            left: -99999px;
+            pointer-events: none;
+            visibility: hidden;
+            z-index: 20;
+            width: 100%;
+            top: 0;
+            transition: opacity 100ms ease-in-out;
+            opacity: 0;
+        }
+
+        .navigation-search.nav-search-active {
+            left: 0;
+            right: 0;
+            pointer-events: auto;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .navigation-search input[type="search"] {
+            outline: 0;
+            border: 0;
+            vertical-align: bottom;
+            line-height: 1;
+            opacity: 0.9;
+            width: 100%;
+            z-index: 20;
+            border-radius: 0;
+            -webkit-appearance: none;
+            height: 60px;
+        }
+
+        .navigation-search input::-ms-clear {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .navigation-search input::-ms-reveal {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .navigation-search input::-webkit-search-decoration,
+        .navigation-search input::-webkit-search-cancel-button,
+        .navigation-search input::-webkit-search-results-button,
+        .navigation-search input::-webkit-search-results-decoration {
+            display: none;
+        }
+
+        .gen-sidebar-nav .navigation-search {
+            top: auto;
+            bottom: 0;
+        }
+
+        :root {
+            --contrast: #222222;
+            --contrast-2: #575760;
+            --contrast-3: #b2b2be;
+            --base: #f0f0f0;
+            --base-2: #f7f8f9;
+            --base-3: #ffffff;
+            --accent: #1e73be;
+        }
+
+        .has-contrast-color {
+            color: var(--contrast);
+        }
+
+        .has-contrast-background-color {
+            background-color: var(--contrast);
+        }
+
+        .has-contrast-2-color {
+            color: var(--contrast-2);
+        }
+
+        .has-contrast-2-background-color {
+            background-color: var(--contrast-2);
+        }
+
+        .has-contrast-3-color {
+            color: var(--contrast-3);
+        }
+
+        .has-contrast-3-background-color {
+            background-color: var(--contrast-3);
+        }
+
+        .has-base-color {
+            color: var(--base);
+        }
+
+        .has-base-background-color {
+            background-color: var(--base);
+        }
+
+        .has-base-2-color {
+            color: var(--base-2);
+        }
+
+        .has-base-2-background-color {
+            background-color: var(--base-2);
+        }
+
+        .has-base-3-color {
+            color: var(--base-3);
+        }
+
+        .has-base-3-background-color {
+            background-color: var(--base-3);
+        }
+
+        .has-accent-color {
+            color: var(--accent);
+        }
+
+        .has-accent-background-color {
+            background-color: var(--accent);
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        body {
+            line-height: 1.5;
+        }
+
+        .entry-content>[class*="wp-block-"]:not(:last-child) {
+            margin-bottom: 1.5em;
+        }
+
+        .main-navigation .main-nav ul ul li a {
+            font-size: 14px;
+        }
+
+        .sidebar .widget,
+        .footer-widgets .widget {
+            font-size: 17px;
+        }
+
+        @media (max-width:768px) {
+            h1 {
+                font-size: 31px;
+            }
+
+            h2 {
+                font-size: 27px;
+            }
+
+            h3 {
+                font-size: 24px;
+            }
+
+            h4 {
+                font-size: 22px;
+            }
+
+            h5 {
+                font-size: 19px;
+            }
+        }
+
+        .top-bar {
+            background-color: #636363;
+            color: #ffffff;
+        }
+
+        .top-bar a {
+            color: #ffffff;
+        }
+
+        .top-bar a:hover {
+            color: #303030;
+        }
+
+        .site-header {
+            background-color: #ffffff;
+        }
+
+        .main-title a,
+        .main-title a:hover {
+            color: #222222;
+        }
+
+        .site-description {
+            color: #757575;
+        }
+
+        .main-navigation,
+        .main-navigation ul ul {
+            background-color: #ed4250;
+        }
+
+        .main-navigation .main-nav ul li a,
+        .main-navigation .menu-toggle,
+        .main-navigation .menu-bar-items {
+            color: #ffffff;
+        }
+
+        .main-navigation .main-nav ul li:not([class*="current-menu-"]):hover>a,
+        .main-navigation .main-nav ul li:not([class*="current-menu-"]):focus>a,
+        .main-navigation .main-nav ul li.sfHover:not([class*="current-menu-"])>a,
+        .main-navigation .menu-bar-item:hover>a,
+        .main-navigation .menu-bar-item.sfHover>a {
+            color: #ffffff;
+            background-color: #c42f2f;
+        }
+
+        button.menu-toggle:hover,
+        button.menu-toggle:focus {
+            color: #ffffff;
+        }
+
+        .main-navigation .main-nav ul li[class*="current-menu-"]>a {
+            color: #ffffff;
+            background-color: #c42f2f;
+        }
+
+        .navigation-search input[type="search"],
+        .navigation-search input[type="search"]:active,
+        .navigation-search input[type="search"]:focus,
+        .main-navigation .main-nav ul li.search-item.active>a,
+        .main-navigation .menu-bar-items .search-item.active>a {
+            color: #ffffff;
+            background-color: #c42f2f;
+        }
+
+        .main-navigation ul ul {
+            background-color: #c42f2f;
+        }
+
+        .main-navigation .main-nav ul ul li a {
+            color: #ffffff;
+        }
+
+        .main-navigation .main-nav ul ul li:not([class*="current-menu-"]):hover>a,
+        .main-navigation .main-nav ul ul li:not([class*="current-menu-"]):focus>a,
+        .main-navigation .main-nav ul ul li.sfHover:not([class*="current-menu-"])>a {
+            color: #fcd9d6;
+            background-color: #c42f2f;
+        }
+
+        .main-navigation .main-nav ul ul li[class*="current-menu-"]>a {
+            color: #fcd9d6;
+            background-color: #c42f2f;
+        }
+
+        .separate-containers .inside-article,
+        .separate-containers .comments-area,
+        .separate-containers .page-header,
+        .one-container .container,
+        .separate-containers .paging-navigation,
+        .inside-page-header {
+            background-color: #ffffff;
+        }
+
+        .entry-title a {
+            color: #222222;
+        }
+
+        .entry-title a:hover {
+            color: #55555e;
+        }
+
+        .entry-meta {
+            color: #595959;
+        }
+
+        .sidebar .widget {
+            background-color: #ffffff;
+        }
+
+        .footer-widgets {
+            background-color: #ffffff;
+        }
+
+        .footer-widgets .widget-title {
+            color: #000000;
+        }
+
+        .site-info {
+            color: #ffffff;
+            background-color: #55555e;
+        }
+
+        .site-info a {
+            color: #ffffff;
+        }
+
+        .site-info a:hover {
+            color: #d3d3d3;
+        }
+
+        .footer-bar .widget_nav_menu .current-menu-item a {
+            color: #d3d3d3;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="password"],
+        input[type="search"],
+        input[type="tel"],
+        input[type="number"],
+        textarea,
+        select {
+            color: #666666;
+            background-color: #fafafa;
+            border-color: #cccccc;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="url"]:focus,
+        input[type="password"]:focus,
+        input[type="search"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            color: #666666;
+            background-color: #ffffff;
+            border-color: #bfbfbf;
+        }
+
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"],
+        a.button,
+        a.wp-block-button__link:not(.has-background) {
+            color: #ffffff;
+            background-color: #55555e;
+        }
+
+        button:hover,
+        html input[type="button"]:hover,
+        input[type="reset"]:hover,
+        input[type="submit"]:hover,
+        a.button:hover,
+        button:focus,
+        html input[type="button"]:focus,
+        input[type="reset"]:focus,
+        input[type="submit"]:focus,
+        a.button:focus,
+        a.wp-block-button__link:not(.has-background):active,
+        a.wp-block-button__link:not(.has-background):focus,
+        a.wp-block-button__link:not(.has-background):hover {
+            color: #ffffff;
+            background-color: #3f4047;
+        }
+
+        a.generate-back-to-top {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: #ffffff;
+        }
+
+        a.generate-back-to-top:hover,
+        a.generate-back-to-top:focus {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+        }
+
+        @media (max-width:768px) {
+
+            .main-navigation .menu-bar-item:hover>a,
+            .main-navigation .menu-bar-item.sfHover>a {
+                background: none;
+                color: #ffffff;
+            }
+        }
+
+        .nav-below-header .main-navigation .inside-navigation.grid-container,
+        .nav-above-header .main-navigation .inside-navigation.grid-container {
+            padding: 0px 20px 0px 20px;
+        }
+
+        .site-main .wp-block-group__inner-container {
+            padding: 40px;
+        }
+
+        .separate-containers .paging-navigation {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .entry-content .alignwide,
+        body:not(.no-sidebar) .entry-content .alignfull {
+            margin-left: -40px;
+            width: calc(100% + 80px);
+            max-width: calc(100% + 80px);
+        }
+
+        .rtl .menu-item-has-children .dropdown-menu-toggle {
+            padding-left: 20px;
+        }
+
+        .rtl .main-navigation .main-nav ul li.menu-item-has-children>a {
+            padding-right: 20px;
+        }
+
+        @media (max-width:768px) {
+
+            .separate-containers .inside-article,
+            .separate-containers .comments-area,
+            .separate-containers .page-header,
+            .separate-containers .paging-navigation,
+            .one-container .site-content,
+            .inside-page-header {
+                padding: 30px;
+            }
+
+            .site-main .wp-block-group__inner-container {
+                padding: 30px;
+            }
+
+            .inside-top-bar {
+                padding-right: 30px;
+                padding-left: 30px;
+            }
+
+            .inside-header {
+                padding-right: 30px;
+                padding-left: 30px;
+            }
+
+            .widget-area .widget {
+                padding-top: 30px;
+                padding-right: 30px;
+                padding-bottom: 30px;
+                padding-left: 30px;
+            }
+
+            .footer-widgets-container {
+                padding-top: 30px;
+                padding-right: 30px;
+                padding-bottom: 30px;
+                padding-left: 30px;
+            }
+
+            .inside-site-info {
+                padding-right: 30px;
+                padding-left: 30px;
+            }
+
+            .entry-content .alignwide,
+            body:not(.no-sidebar) .entry-content .alignfull {
+                margin-left: -30px;
+                width: calc(100% + 60px);
+                max-width: calc(100% + 60px);
+            }
+
+            .one-container .site-main .paging-navigation {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* End cached CSS */
+        .is-right-sidebar {
+            width: 30%;
+        }
+
+        .is-left-sidebar {
+            width: 30%;
+        }
+
+        .site-content .content-area {
+            width: 70%;
+        }
+
+        @media (max-width:768px) {
+
+            .main-navigation .menu-toggle,
+            .sidebar-nav-mobile:not(#sticky-placeholder) {
+                display: block;
+            }
+
+            .main-navigation ul,
+            .gen-sidebar-nav,
+            .main-navigation:not(.slideout-navigation):not(.toggled) .main-nav>ul,
+            .has-inline-mobile-toggle #site-navigation .inside-navigation>*:not(.navigation-search):not(.main-nav) {
+                display: none;
+            }
+
+            .nav-align-right .inside-navigation,
+            .nav-align-center .inside-navigation {
+                justify-content: space-between;
+            }
+        }
+    </style>
+    <link rel="icon" href="https://pokokbelajar.github.io/img/cropped-soalbelajar-32x32.png" sizes="32x32" />
+    <link rel="icon" href="https://pokokbelajar.github.io/img/cropped-soalbelajar-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://pokokbelajar.github.io/img/cropped-soalbelajar-180x180.png" />
+    <meta name="msapplication-TileImage" content="https://pokokbelajar.github.io/img/cropped-soalbelajar-270x270.png" />
+</head>
+
+<body
+    class="home blog wp-custom-logo wp-embed-responsive right-sidebar nav-above-header separate-containers nav-search-enabled nav-aligned-center header-aligned-center dropdown-hover"
+    itemtype="https://schema.org/Blog" itemscope>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-dark-grayscale">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0 0.49803921568627" />
+                    <feFuncG type="table" tableValues="0 0.49803921568627" />
+                    <feFuncB type="table" tableValues="0 0.49803921568627" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-grayscale">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0 1" />
+                    <feFuncG type="table" tableValues="0 1" />
+                    <feFuncB type="table" tableValues="0 1" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-purple-yellow">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" />
+                    <feFuncG type="table" tableValues="0 1" />
+                    <feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-blue-red">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0 1" />
+                    <feFuncG type="table" tableValues="0 0.27843137254902" />
+                    <feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-midnight">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0 0" />
+                    <feFuncG type="table" tableValues="0 0.64705882352941" />
+                    <feFuncB type="table" tableValues="0 1" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-magenta-yellow">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0.78039215686275 1" />
+                    <feFuncG type="table" tableValues="0 0.94901960784314" />
+                    <feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-purple-green">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" />
+                    <feFuncG type="table" tableValues="0 1" />
+                    <feFuncB type="table" tableValues="0.44705882352941 0.4" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false"
+        role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
+        <defs>
+            <filter id="wp-duotone-blue-orange">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix"
+                    values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " />
+                <feComponentTransfer color-interpolation-filters="sRGB">
+                    <feFuncR type="table" tableValues="0.098039215686275 1" />
+                    <feFuncG type="table" tableValues="0 0.66274509803922" />
+                    <feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" />
+                    <feFuncA type="table" tableValues="1 1" />
+                </feComponentTransfer>
+                <feComposite in2="SourceGraphic" operator="in" />
+            </filter>
+        </defs>
+    </svg><a class="screen-reader-text skip-link" href="#content" title="Langsung ke isi">Langsung ke isi</a>
+    <nav class="main-navigation nav-align-center has-menu-bar-items sub-menu-right" id="site-navigation"
+        aria-label="Utama" itemtype="https://schema.org/SiteNavigationElement" itemscope>
+        <div class="inside-navigation grid-container">
+            <form method="get" class="search-form navigation-search" action="/">
+                <input type="search" class="search-field" value="" name="q" title="Cari" />
+            </form> <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                <span class="gp-icon icon-menu-bars"><svg viewBox="0 0 512 512" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                        <path
+                            d="M0 96c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24z" />
+                    </svg><svg viewBox="0 0 512 512" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        width="1em" height="1em">
+                        <path
+                            d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z" />
+                    </svg></span><span class="mobile-menu">Menu</span> </button>
+            <div id="primary-menu" class="main-nav">
+                <ul id="menu-soal-belajar" class=" menu sf-menu">
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1"><a
+                            href="https://pokokbelajar.github.io">Home</a></li>
+                </ul>
+                </ul>
+            </div>
+            <div class="menu-bar-items"><span class="menu-bar-item search-item"><a aria-label="Buka Kolom Pencarian"
+                        href="#"><span class="gp-icon icon-search"><svg viewBox="0 0 512 512"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M208 48c-88.366 0-160 71.634-160 160s71.634 160 160 160 160-71.634 160-160S296.366 48 208 48zM0 208C0 93.125 93.125 0 208 0s208 93.125 208 208c0 48.741-16.765 93.566-44.843 129.024l133.826 134.018c9.366 9.379 9.355 24.575-.025 33.941-9.379 9.366-24.575 9.355-33.941-.025L337.238 370.987C301.747 399.167 256.839 416 208 416 93.125 416 0 322.875 0 208z" />
+                            </svg><svg viewBox="0 0 512 512" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="1em" height="1em">
+                                <path
+                                    d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z" />
+                            </svg></span></a></span></div>
+        </div>
+    </nav>
+    <header class="site-header grid-container" id="masthead" aria-label="Situs"
+        itemtype="https://schema.org/WPHeader" itemscope>
+        <div class="inside-header grid-container">
+            <h1 class="site-logo">
+                <a href="https://pokokbelajar.github.io" rel="home"> BELAJAR</a>
+            </h1>
+        </div>
+    </header>
+
+    <div class="site grid-container container hfeed" id="page">
+        <div class="site-content" id="content">
+            <div class="content-area" id="primary">
+                    <main class="site-main" id="main">
+        <article id="post-1327" class="post-1327 post type-post status-publish format-standard hentry category-info"
+            itemtype="https://schema.org/CreativeWork" itemscope="">
+            <div class="inside-article">
+                <header class="entry-header" aria-label="Konten">
+                    <h1 class="entry-title" itemprop="headline">Cara Kerja Server Gojek Mencari Driver</h1>
+                    <div class="entry-meta">
+                       <span
+                            class="byline">oleh <span class="author vcard" itemprop="author"
+                                itemtype="https://schema.org/Person" itemscope=""><span class="author-name"
+                                    itemprop="name">iapijr</span></span></span>
+                    </div>
+                </header>
+                <div class="entry-content" itemprop="text">
+                    <div style="text-align: center">
+                        <img src="https://tse1.mm.bing.net/th?q=Cara+Kerja+Server+Gojek+Mencari+Driver" alt="Cara Kerja Server Gojek Mencari Driver">
+                    </div>
+                    <p></p>
+                    <p>wawancara dengan driver gojek</p>
+                    <div id="ez-toc-container"
+                        class="ez-toc-v2_0_40 counter-hierarchy ez-toc-counter ez-toc-light-blue ez-toc-container-direction">
+                        <div class="ez-toc-title-container">
+                            <p class="ez-toc-title">Daftar Isi</p>
+                            <span class="ez-toc-title-toggle"><a href="#"
+                                    class="ez-toc-pull-right ez-toc-btn ez-toc-btn-xs ez-toc-btn-default ez-toc-toggle"
+                                    area-label="ez-toc-toggle-icon-1"><label for="item-63b392361c4a0"
+                                        aria-label="Table of Content"><span
+                                            style="display: flex;align-items: center;width: 35px;height: 30px;justify-content: center;direction:ltr;"><svg
+                                                style="fill: #999;color:#999" xmlns="http://www.w3.org/2000/svg"
+                                                class="list-377408" width="20px" height="20px" viewBox="0 0 24 24"
+                                                fill="none">
+                                                <path
+                                                    d="M6 6H4v2h2V6zm14 0H8v2h12V6zM4 11h2v2H4v-2zm16 0H8v2h12v-2zM4 16h2v2H4v-2zm16 0H8v2h12v-2z"
+                                                    fill="currentColor"></path>
+                                            </svg><svg style="fill: #999;color:#999" class="arrow-unsorted-368013"
+                                                xmlns="http://www.w3.org/2000/svg" width="10px" height="10px"
+                                                viewBox="0 0 24 24" version="1.2" baseProfile="tiny">
+                                                <path
+                                                    d="M18.2 9.3l-6.2-6.3-6.2 6.3c-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3h11c.3 0 .5-.1.7-.3.2-.2.3-.5.3-.7s-.1-.5-.3-.7zM5.8 14.7l6.2 6.3 6.2-6.3c.2-.2.3-.5.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3h-11c-.3 0-.5.1-.7.3-.2.2-.3.5-.3.7s.1.5.3.7z">
+                                                </path>
+                                            </svg></span></label><input type="checkbox" id="item-63b392361c4a0"></a></span>
+                        </div>
+                        <nav>
+                            <ul class="ez-toc-list ez-toc-list-level-1 ">
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#wawancara-dengan-driver-gojek">1.
+                                            wawancara dengan driver gojek</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#ada-seorang-driver-gojek-yang-suka-menghamburkan-uangnya">2.
+                                            Ada seorang driver gojek yang suka menghamburkan uangnya</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#what-happened-to-the-gojek-driver">3.
+                                            What happened to the gojek driver</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-remote-server">4.
+                                            cara kerja remote server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#apa-itu-email-server-dan-cara-kerjanya%e2%80%8b">5.
+                                            apa itu email server dan cara kerjanya​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#jelaskan-cara-admin-server-bekerjadan-apa-yang-dikerjakan">6.
+                                            jelaskan cara admin server bekerja,dan apa yang dikerjakan?</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#driver-gojek-mengendarai-motornya-90kmjamsetara-dengan-ms">7.
+                                            Driver Gojek mengendarai motornya 90km/jam,setara dengan....m/s</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#di-era-digital-sekarang-ini-terkenal-dengan-melakukan-sesuatu-secara-online-seperti-gojek-lebih-dari-pergi-makanan-banyak-orang-berganti-pekerjaan-menjadi-gojek-bandingkan-pekerjaan-gojek-dengan-ke">8.
+                                            Di era digital sekarang ini terkenal dengan melakukan sesuatu secara online. Seperti gojek lebih dari pergi makanan. Banyak orang berganti pekerjaan menjadi gojek. Bandingkan pekerjaan gojek dengan kewirausahaan!</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-server-sebelum-ke-client">9.
+                                            bagaimana cara  kerja server sebelum ke client</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#seorang-driver-gojek-mengendarai-sepeda-motornya-dengan-kecepatan-35kmjam-ia-akan-menjemput-penumpang-pada-pukul-09-00-maka-ia-berangkat-dari-rumahnya-pukul-07-00-berapa-km-jarak-yang-ditempuh-ole">10.
+                                            seorang driver gojek mengendarai sepeda motornya dengan kecepatan 35km/jam. ia akan menjemput penumpang pada pukul 09.00. maka ia berangkat dari rumahnya pukul 07.00. berapa km jarak yang ditempuh oleh driver gojek tersebut?</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-web-server">11.
+                                            Bagaimana cara kerja web server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#carilah-driver-driver-pendukung-hardware">12.
+                                            Carilah driver-driver pendukung hardware</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-client-server">13.
+                                            bagaimana cara kerja client server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-dedicated-server%e2%80%8b">14.
+                                            cara kerja dedicated server​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-web-server">15.
+                                            bagaimana cara kerja web server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-web-server">16.
+                                            cara kerja web server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#sebuah-laporan-menyatakan-bahwa-pendapatan-rata-rata-per-hari-driver-gojek-lebih-besar-dari-driver-grab-untuk-itu-dilakukan-survei-terhadap-50-orang-driver-gojek-dan-60-orang-driver-grab-dari-hasil">17.
+                                            Sebuah laporan menyatakan bahwa pendapatan rata-rata per hari driver Gojek lebih besar dari driver Grab. 
+Untuk itu dilakukan survei terhadap 50 orang driver Gojek dan 60 orang driver Grab. Dari hasil survei diperoleh hasil bahwa pendapatan rata-rata driver Gojek Rp. 520.000 dengan standar deviasi Rp. 230.000,-. Sedangkan driver Grab Rp. 460.000,- dengan standar deviasi Rp. 170.000,-. 
+Dengan interval keyakinan 90%, berapakah rentang perbedaan pendapatan antara driver Gojek dengan driver Grab? 
+Jawab beserta gambar. 
+Diketahui: Z α/2 = 1,645</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#2-di-era-digital-sekarang-ini-terkenal-dengan-melakukan-sesuatu-secara-online-seperti-gojek-lebih-dari-pergi-makanan-banyak-orang-berganti-pekerjaan-menjadi-gojek-bandingkan-pekerjaan-gojek-den">18.
+                                            2. Di era digital sekarang ini terkenal dengan melakukan sesuatu secara online.  Seperti gojek lebih dari pergi makanan.  Banyak orang berganti pekerjaan menjadi gojek.  Bandingkan pekerjaan gojek dengan berwirausaha​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-motor-driver-1-arah">19.
+                                            cara kerja motor driver 1 arah</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-web-server">20.
+                                            Bagaimana cara kerja web server?</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-cloud-computting-pada-gojek">21.
+                                            cara kerja cloud computting pada gojek</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#jelaskan-cara-kerja-web-server-dan-server-side-scripting%e2%80%8b">22.
+                                            jelaskan cara kerja web server dan server Side scripting​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#buat-pesan-untuk-driver-gojek-tentang-ramah-minimal-5-baris%e2%80%8b">23.
+                                            buat pesan untuk driver gojek tentang (ramah) minimal 5 baris​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#tuliskan-bagaimana-cara-kerja-driver">24.
+                                            Tuliskan bagaimana cara kerja driver</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-dns-server">25.
+                                            cara kerja DNS SERVER</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-admin-server">26.
+                                            bagaimana cara kerja admin server</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-mail-server%e2%80%8b">27.
+                                            cara kerja mail server​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#bagaimana-cara-kerja-web-server-dan-apa-saja-yang-bisa-dilakukan-oleh-e-mail-server">28.
+                                            Bagaimana cara kerja web server dan apa saja yang bisa dilakukan oleh E - mail server </a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#apa-itu-driver-motor-dan-bagaimana-cara-kerjanya%e2%80%8b">29.
+                                            apa itu driver motor dan bagaimana cara kerjanya​</a>
+                                    </li>
+                                                                    <li class="ez-toc-page-1 ez-toc-heading-level-2">
+                                        <a class="ez-toc-link ez-toc-heading-1"
+                                            href="#cara-kerja-dhcp-server-dan-kelebihan-dhcp-server-serta-script">30.
+                                            Cara kerja DHCP SERVER !
+Dan kelebihan DHCP SERVER , serta script !</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </div>
+                                            <h2 class="ez-toc-section" id="wawancara-dengan-driver-gojek">
+                            1. wawancara dengan driver gojek</h2><br />
+                        P : Pewawancara<br />DG : Driver gojek <br />-----------------------------------------------------------<br />P: "Pak boleh saya mewawancarai bapak tentang Driver Gojek?"<br />DG: "Silahkan, pak!"<br />P: "Bagaimana penghasilan bapak setiap bapak Ngojek?"<br />DG: "yah... kalo saya ngojek Full-Time saya sebulan bisa dapat 1.997.819"<br />P: "Ohk.. kalo uang segitu cukup untuk biayai keluarga?"<br />DG: "Cukup, kalo buat makan.. dan beli keperluan keluarga"<br />P: "Biasanya bapak ngojek dari jam brp sampai jam brp?"<br />DG: "Saya ngojek dari jam 10.00 Pagi - Sore"<br />P: "Cukup untuk informasinya ya pak, Terimakasih atas informasi &amp; wawancaranya"<br />DG: "Sama-sama"<br /><br />Maaf kalo pendek<br />Semoga beruntung!<br /><br /><br /><br />
+                                            <h2 class="ez-toc-section" id="ada-seorang-driver-gojek-yang-suka-menghamburkan-uangnya">
+                            2. Ada seorang driver gojek yang suka menghamburkan uangnya</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Seharusnya ia tidak melakukan hal tersebut, selain merusak nama baik Gojek menghamburkan uang juga dapat membawa seseorang kedalam hal yang tercela serta dapat mempengaruhi lingkungan masyarakat disekitarnnya. Malahan Gojek yang merupakan aplikasi online yang dapat berdampak pada lingkungan yang lebih luas.</p><p><strong>Penjelasan:</strong></p><p>Dengan rusaknya nama baik Gojek, masyarakat akan beralih ke Grab atau aplikasi sejenisnya dikarenakan para pengguna akan berusaha menjaga keamanan diri mereka sendiri.</p><br />
+                                            <h2 class="ez-toc-section" id="what-happened-to-the-gojek-driver">
+                            3. What happened to the gojek driver</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>apa yang terjadi pada pengendara gojek</p><p><strong>Jawaban:</strong></p><p></p><p>what happened to you bre ._.</p><br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-remote-server">
+                            4. cara kerja remote server</h2><br />
+                        1.      Pengertian Remote Access<br /><br />Remote Access adalah kemampuan untuk terhubung dengan resource pada suatunetwork sentral dari suatu lokasi. Ini berarti menggunakan sebuah PC dan modem di satutempat, lewat kabel telepon, terhubung ke suatu PC atau server pada network utama suatuperusahaan. Adapun oleh Utomo, dkk (2010) Remote access didefinisikan sebagai Remote access merupakan sistem yangbisa digunakan dalam pengendalian suatu manajemen jaringan, dimana administrator dapat denganmudah mengontrol dan mengawasi komputer client, berinteraksi dengan user, backup data, atauaktifitas lainnya.Sedangkan menurut Dhawan (1998) dalam Eliminate Guess Work (2010), Remote Accessadalah kemampuan untuk terhubung dengan resource pada suatu network sentral dari suatu lokasi.Ini berarti menggunakan sebuah PC dan modem di satu tempat, lewat kabel telepon, terhubung kesuatu PC atau server pada network utama suatu perusahaan.Secara umum aplikasi remote access mempunyai beberapa fungsi dalam manajemen jaringan,menurut wahana dan andi (2010), dalam bukunya Cara Jitu Pengelolaan Jaringan Windows denganRemote Desktop dan Administration, ada beberapa kegunaan remote access/Remote Desktop yang lazim diantaranya:<br /><br />Mengendalikan komputer lain dari lokasi yang remote, misalnya untuk mengakses softwaredi komputer yang ada di divisi atau bagian lain di perusahaan oleh pengguna technicalsupport perusahaan diruang kerjanya.<br /><br />Mematikan komputer dari jarak jauh.<br /><br />Menghidupkan ulang komputer/restart dari jarak jauh.<br /><br />Memodifikasi setting registry komputer lain dari jarak jauh.<br /><br />Mengawasi penggunaan komputer lain dari jarak jauh.<br /><br />Membantu pengguna lain memecahkan masalah di PC-nya dari jarak jauh.<br /><br />Mengawasi penggunaan program berjalan / internet dari jarak jauh.<br /><br />Pemeliharaan (maintenance) komputer dari jarak jauh.<br /><br />Sharing resource dari jarak jauh.<br /><br /> <br /><br />2.      Sejarah<br /><br />Pertengahan 1980-an ketika PC mulai populer, beberapa sistem komputer mulaiberpindah dari model sebuah mainframe dengan banyak terminal. LAN lahir ketikakebutuhan akan pertukaran informasi antara satu komputer dengan yang lain. Kemudiansebagian besar perusahaan mempunyai LAN yang menggunakan kabel.Memasuki tahun 1990-an, perusahaan-perusahaan yang mempunyai kantor pada lokasiterpisah, mulai memikirkan cara lain untuk pertukaran informasi. Ditambah denganukuran PC yang semakin kecil dan konsep PC yang mobil. Para user menginginkankemampuan akses yang sama antara ketika mereka berada di jalan dengan ketika beradadi kantor. Kebutuhan akan remote site dan remote user melahirkan remote access.Salah satu alasan mengapa teknologi remote access menjadi salah satu pasar denganpertumbuhan tercepat adalah pertumbuhan jumlah komputer notebook dengankemampuan tinggi yang luar biasa.Trend ini memungkinkan kemampuan orang-orangyang lebih banyak berada di luar untuk akses ke jaringan (network) utama. Selain itupenurunan harga modem kecepatan tinggi yang memungkinkan komunikasi remotemenjadi suatu option untuk siapa saja. Juga ditunjang dengan jalur telepon dengankualitas yang lebih tinggi dan biaya lebih rendah contohnya adalah ISDN.<br />
+                                            <h2 class="ez-toc-section" id="apa-itu-email-server-dan-cara-kerjanya%e2%80%8b">
+                            5. apa itu email server dan cara kerjanya​</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Mail server adalah sebuah server atau layanan internet berbasis cloud computing yang digunakan untuk mengirim dan menerima email dalam satu jaringan server mail yang sama. Mail server cara kerjanya adalah dapat mengumpulkan, mengolah, dan mengirim data-data serta informasi dalam bentuk email / surat elektronik dengan menggunakan domain email khusus atau domain email tersendiri. </p><p></p><br />
+                                            <h2 class="ez-toc-section" id="jelaskan-cara-admin-server-bekerjadan-apa-yang-dikerjakan">
+                            6. jelaskan cara admin server bekerja,dan apa yang dikerjakan?</h2><br />
+                        
+			
+				1. tugas administrasi server , memantau semua aktivitas koneksi yang
+ ada di server,, seorang admin server memiliki wewenang penuh atas 
+server tersebut,,<br />tanggung jawab : admin server bertanggung jawab atas masalh yg terjadi pd server tsb<br /><br />2. prisip kerja client server bisa di liat di gambar ini ya
+			
+		
+
+            
+
+
+    
+    
+
+        
+            
+
+                
+
+                
+    
+
+    
+<br /><br />
+                                            <h2 class="ez-toc-section" id="driver-gojek-mengendarai-motornya-90kmjamsetara-dengan-ms">
+                            7. Driver Gojek mengendarai motornya 90km/jam,setara dengan....m/s</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>25</p><p><strong>Penjelasan:</strong></p><p>3.6 km/h = 1 m/s</p><p>karena 3.6km/h =3600m/h = 60m/menit = 1m/s</p><p>jadi tinggal 90:(3.6)=90/(18/5)=90*5/18=90/18*5=5*5=25 m/s</p><p>semoga membantu</p><p><strong>Jawaban:</strong></p><p>25m/s</p><p><strong>Penjelasan:</strong></p><p>1 km = 1000m</p><p>1 jam = 3600s</p><p></p><p>[tex]\frac{90.1000}{1.3600} = 25m/s[/tex]</p><br />
+                                            <h2 class="ez-toc-section" id="di-era-digital-sekarang-ini-terkenal-dengan-melakukan-sesuatu-secara-online-seperti-gojek-lebih-dari-pergi-makanan-banyak-orang-berganti-pekerjaan-menjadi-gojek-bandingkan-pekerjaan-gojek-dengan-ke">
+                            8. Di era digital sekarang ini terkenal dengan melakukan sesuatu secara online. Seperti gojek lebih dari pergi makanan. Banyak orang berganti pekerjaan menjadi gojek. Bandingkan pekerjaan gojek dengan kewirausahaan!</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>kalau gojek itu dagangnya online lalu langsung diantar barang/jasanya.</p><p><strong>Penjelasan:</strong></p><p>maaf ya kalau salah</p><p>kalau ini bermanfaat</p><p>jadikan jawaban tercerdas ya..</p><br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-server-sebelum-ke-client">
+                            9. bagaimana cara  kerja server sebelum ke client</h2><br />
+                        Cara Kerja Web Server<p>Sederhananya
+ tugas web server adalah untuk menerima permintaan dari client dan 
+mengirimkan kembali berkas yang diminta oleh client tersebut.</p><p>Seperti
+ yang sudah saya informasikan diatas bahwa client yang dimaksud disini 
+adalah komputer desktop yang memiliki atau telah menginstall web browser
+ seperti Chrome, Mozilla, Opera dan lain-lain yang dapat terhubung ke 
+web server melalui jaringan internet atau intranet.</p><p>Perangkat
+ lunak web server terdapat pada komputer server, dan di komputer ini 
+pula-lah data-data website tersimpan dengan rapih. Sama halnya dengan 
+komputer client, komputer server juga harus terhubung dengan jaringan 
+internet atau jaringan intranet untuk dapat diakses oleh client.</p><p>Pada
+ saat client (browser) meminta data web page kepada server, maka 
+instruksi permintaan data oleh browser tersebut akan dikemas di dalam 
+TCP yang merupakan protokol transport dan dikirim ke alamat yang dalam 
+hal ini merupakan protokol berikutnya yaitu Hyper Text Transfer Protocol
+ (HTTP) dan atau Hyper Text Transfer Protocol Secure (HTTPS). Data yang 
+diminta dari browser ke web server disebut dengan HTTP request yang 
+kemudian akan dicarikan oleh web server di dalam komputer server. Jika 
+ditemukan, data tersebut akan dikemas oleh web server dalam TCP dan 
+dikirim kembali ke browser untuk ditampilkan. Data yang dikirim dari 
+server ke browser dikenal dengan HTTP response. Jika data yang diminta 
+oleh browser tersebut ternyata tidak ditemukan oleh web server, maka web
+ server akan menolak permintaan tersebut dan browser akan menampilkan 
+notifikasi error 404 atau Page Not Found.</p><p>Meskipun
+ proses atau cara kerja web server diatas seperti sangat rumit, tapi 
+pada prakteknya proses tersebut berlangsung dengan sangat cepat. Anda 
+bahkan bisa sampai tidak menyadari bahwa pada saat anda meminta suatu 
+halaman web, ternyata hal itu membutuhkan proses yang sangat panjang 
+sampai halaman tersebut dapat anda lihat di browser anda.</p><br /><br />
+                                            <h2 class="ez-toc-section" id="seorang-driver-gojek-mengendarai-sepeda-motornya-dengan-kecepatan-35kmjam-ia-akan-menjemput-penumpang-pada-pukul-09-00-maka-ia-berangkat-dari-rumahnya-pukul-07-00-berapa-km-jarak-yang-ditempuh-ole">
+                            10. seorang driver gojek mengendarai sepeda motornya dengan kecepatan 35km/jam. ia akan menjemput penumpang pada pukul 09.00. maka ia berangkat dari rumahnya pukul 07.00. berapa km jarak yang ditempuh oleh driver gojek tersebut?</h2><br />
+                        Kecepatan = 35 km/jam<br />Waktu = 2 jam<br />Jarak = kecepatan × waktu<br />          = 35 × 2<br />          = 70 km= 35km/jam x (9jam - 7jam)<br />=35km/jam x 2 jam<br />= 70 km<br /><br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-web-server">
+                            11. Bagaimana cara kerja web server</h2><br />
+                        cara kerja web server yaitu menerima permintaan dari komputer clien dan mengirim kembali yang diminta oleh komputer clien1.Menerima permintaan (request) dari client<br />2.Mengirimkan apa yang diminta oleh client (response).<br />
+                                            <h2 class="ez-toc-section" id="carilah-driver-driver-pendukung-hardware">
+                            12. Carilah driver-driver pendukung hardware</h2><br />
+                        <p>storage device,input device,dan output device maaf kalau salah semoga bermanfaat jangan lupa terima kasih</p><br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-client-server">
+                            13. bagaimana cara kerja client server</h2><br />
+                        kalo komputer server,dia komputer yang melayani komputer client.sedangkan komputet client,komputet yang harus dilayani.Contoh warnet.warnet pasti ada 1 komputer yang membuat beberapa komputer bisa bertambah lama,mengirim file dan lain lain.....<br /><br />semoga berguna:D<br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-dedicated-server%e2%80%8b">
+                            14. cara kerja dedicated server​</h2><br />
+                        Dedicated server adalah salah satu tipe hosting dimana memberikan penyewaan satu server secara utuh, tanpa dibagi dengan user lain, atau dengan kata lain dengan skala penuh, kepada hanya satu buah akun penyewa. Sehingga hanya user tersebut yang dapat menempati sekaligus menggunakan server tersebut.<br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-web-server">
+                            15. bagaimana cara kerja web server</h2><br />
+                        1. Menerima permintaan (request) dari client, dan<br /><br />2. Mengirimkan apa yang diminta oleh client (response).<br /><br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-web-server">
+                            16. cara kerja web server</h2><br />
+                        Server web atau yang dalam bahasa inggris disebut web server adalah perangkat lunak (software) dalam server yang berfungsi untuk menerima permintaan (request) berupa halaman web melalui protokol HTTP dan atau HTTPS dari klien yang lebih dikenal dengan nama browser, kemudian mengirimkan kembali (respon) hasil permintaan tersebut ke dalam bentuk halaman-halaman web yang pada umumnya berbentuk dokumen HTML.<br />
+                                            <h2 class="ez-toc-section" id="sebuah-laporan-menyatakan-bahwa-pendapatan-rata-rata-per-hari-driver-gojek-lebih-besar-dari-driver-grab-untuk-itu-dilakukan-survei-terhadap-50-orang-driver-gojek-dan-60-orang-driver-grab-dari-hasil">
+                            17. Sebuah laporan menyatakan bahwa pendapatan rata-rata per hari driver Gojek lebih besar dari driver Grab. 
+Untuk itu dilakukan survei terhadap 50 orang driver Gojek dan 60 orang driver Grab. Dari hasil survei diperoleh hasil bahwa pendapatan rata-rata driver Gojek Rp. 520.000 dengan standar deviasi Rp. 230.000,-. Sedangkan driver Grab Rp. 460.000,- dengan standar deviasi Rp. 170.000,-. 
+Dengan interval keyakinan 90%, berapakah rentang perbedaan pendapatan antara driver Gojek dengan driver Grab? 
+Jawab beserta gambar. 
+Diketahui: Z α/2 = 1,645</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>gak tau maah kalo kamu marah</p><br />
+                                            <h2 class="ez-toc-section" id="2-di-era-digital-sekarang-ini-terkenal-dengan-melakukan-sesuatu-secara-online-seperti-gojek-lebih-dari-pergi-makanan-banyak-orang-berganti-pekerjaan-menjadi-gojek-bandingkan-pekerjaan-gojek-den">
+                            18. 2. Di era digital sekarang ini terkenal dengan melakukan sesuatu secara online.  Seperti gojek lebih dari pergi makanan.  Banyak orang berganti pekerjaan menjadi gojek.  Bandingkan pekerjaan gojek dengan berwirausaha​</h2><br />
+                        <p>Jawaban:usaha di era saat ini sulit mendapatkan pendapat </p><p></p><p>Penjelasan: karena untuk di rumah aja gojek lebih baik dari pada wirausaha</p><p></p><p><strong>Jawaban:</strong></p><p>karena hasil gojek diera digital sangat untung karena banyak orang pesan makana diantar sama ojek </p><p><strong>Penjelasan:</strong></p><p>semoga bermanfaat</p><br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-motor-driver-1-arah">
+                            19. cara kerja motor driver 1 arah</h2><br />
+                        Bentuk rangkaian driver motor yang umum digunakan yaitu H-Bridge. Berbentuk seperti huruf H yang memiliki perbedaan fungsi di setiap sisinya. Prinsip sederhana dari pergerakan rangkaian driver motor<br /><br />driver motor yang digunakan yaitu Transistor Bipolar (BJT). Motor akan bergerak forward atau searah jarum jam apabila transistor pada sebelah kiri atas dan kanan bawah aktif (high) serta transistor kiri bawah dan kanan atas tidak aktif (low). Pada kondisi ini kutub positif pada motor DC mendapatkan tegangan sumber dan kutub negatifnya terhubung dengan ground sehingga ada perbedaan potensial yang menyebabkan motor berputar. Untuk pergerakan berlawanan jarum jam (reverse) kebalikan dari seluruh kondisi pada keadaan forward.<br /><br />Jangan sekali-kali mencoba untuk mengaktifkan seluruh transistor pada bagian kiri saja atau kanan saja, hal ini dapat menyebabkan hubung singkat atau short circuit yang dapat berakibat rusaknya komponen transitor karena catu daya langsung terhubung ke ground (konslet). Untuk antisipasinya dapat memparalelkan dengan dioda apabila salah mengaktifkan atau memprogram.<br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-web-server">
+                            20. Bagaimana cara kerja web server?</h2><br />
+                        Cara Kerjanya Web Server adalah<br /><br />Sederhananya tugas web server adalah untuk menerima permintaan dari client dan mengirimkan kembali berkas yang diminta oleh client tersebut.<br /><br />Seperti yang sudah saya informasikan diatas bahwa client yang dimaksud disini adalah komputer desktop yang memiliki atau telah menginstall web browser seperti Chrome, Mozilla, Opera dan lain-lain yang dapat terhubung ke web server melalui jaringan internet atau intranet.<br /><br /><br />Perangkat lunak web server terdapat pada komputer server, dan di komputer ini pula-lah data-data website tersimpan dengan rapih. Sama halnya dengan komputer client, komputer server juga harus terhubung dengan jaringan internet atau jaringan intranet untuk dapat diakses oleh client.<br /><br />Pada saat client (browser) meminta data web page kepada server, maka instruksi permintaan data oleh browser tersebut akan dikemas di dalam TCP yang merupakan protokol transport dan dikirim ke alamat yang dalam hal ini merupakan protokol berikutnya yaitu Hyper Text Transfer Protocol (HTTP) dan atau Hyper Text Transfer Protocol Secure (HTTPS). Data yang diminta dari browser ke web server disebut dengan HTTP request yang kemudian akan dicarikan oleh web server di dalam komputer server. Jika ditemukan, data tersebut akan dikemas oleh web server dalam TCP dan dikirim kembali ke browser untuk ditampilkan. Data yang dikirim dari server ke browser dikenal dengan HTTP response. Jika data yang diminta oleh browser tersebut ternyata tidak ditemukan oleh web server, maka web server akan menolak permintaan tersebut dan browser akan menampilkan notifikasi error 404 atau Page Not Found.<br /><br />Meskipun proses atau cara kerja web server diatas seperti sangat rumit, tapi pada prakteknya proses tersebut berlangsung dengan sangat cepat. Anda bahkan bisa sampai tidak menyadari bahwa pada saat anda meminta suatu halaman web, ternyata hal itu membutuhkan proses yang sangat panjang sampai halaman tersebut dapat anda lihat di browser anda.<br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-cloud-computting-pada-gojek">
+                            21. cara kerja cloud computting pada gojek</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>cloud computing merupakan gabungan pemanfaatan teknologikomputer (komputasi) dalam suatu jaringan dengan pengembangan berbasis internet yang mempunyaifungsi untuk menjalankan program atau aplikasi melalui komputer – komputer yang terkoneksi padawaktu yang sama, tetapi tak semua yang terkoneksi melalui internet menggunakan cloud computing.Teknologi Cloud Computing menggunakan internet sebagai pusat dari server data dan untukpengolahan data maupun aplikasi pengguna</p><p></p><p></p><p>jadikan jawaban tercerdas thx</p><p></p><p><strong>Jawaban:</strong></p><p>Seperti yang sudah kita ketahui bahwa Cloud Computing menggunakan internet sebagi pusat dari server data dan untuk pengolahan data. Hal ini memungkinkan pengguna untuk tidak melakukan instalasi dalam proses login ke internet, tersambung dalam beberapa program dan menjalankan aplikasi. Lalu seperti apakah sebenarnya cara kerja dari cloud computing system ini?</p><p></p><p>Yang pertama adalah perintah atau instruksi dari pengguna dan media penyimpanan data akan disimpan secara virtual dengan menggunakan jaringan internet yang terkoneksi. Setelah itu, perintah ini akan dilanjutkan menuju kepada server aplikasi. Setelah server aplikasi selesai menerima semua perintah, maka kemudian data tersebut akan diproses. Sebagai hasilnya, pada proses terakhir akan ada halaman yang berbeda dan diperbaharui sesuai dengan perintah tersebut.</p><p></p><p>Hal inilah yang akan dilihat oleh pengguna dimana kemudian konsumen pun juga akan merasakan manfaatnya. Contoh mudahnya adalah seperti pada penggunaan email pada aplikasi Gmail atau Yahoo. Pengguna tidak harus mengunduh software khusus untuk dapat menggunakan layanannya karena semua data yang terletak pada beberapa server yang berbeda telah diintegrasikan secara umum atau global. Yang diperlukan pengguna untuk dapat menikmati layanannya hanyalah sambungan internet. Sedangkan untuk masalah data, Yahoo dan Gmail lah yang bertanggung jawab dan memiliki tugas untuk mengelolanya.</p><p></p><p>Pada layanan online GoJek pun, semua memori pengguna dan software pun sebenarnya tidak terletak pada komputer namun diintegrasikan secara langsung dengan menggunakan sistem cloud dengan perantara computer serta dengan sambungan atau koneksi internet. Secara singkat, cloud computing adalah sebuah sistem yang kini banyak dimanfaatkan oleh beberapa perusahaan ternama maupun perusahaan baru serta oleh organisasi karena akan sangat bermanfaat terutama untuk penyimpanan data yang sangat efisien.</p><p></p><p>Dalam pendistribusian data yang terkait dan jalur utama, internet merupakan sebuah faktor yang paling penting dan wajib ada. Jika anda tertarik untuk beralih dan menggunakan sistem cloud ini, maka anda pun juga harus memikirkan pula mengenai aspek keamanan dan juga masalah privasi. Beberapa hal yang patut anda waspadai adalah seperti serangan berbagai hacker atau peretas yang seakan tidak pernah berhenti untuk meretas internet. Untuk menanggulangi hal semacam ini, beberapa vendor atau provider data center memang harus selalu melakukan upgrade dan meningkatkan kualitas pelayanan mereka. Namun selain itu, yang terpenting kita sebagai pengguna harus lebih teliti dan berhati hati dalam memilih provider data center.</p><p><strong>Penjelasan:</strong></p><p>semoga bermanfaat</p><p></p><p>jadikan jawaban terbaik ya kawan</p><br />
+                                            <h2 class="ez-toc-section" id="jelaskan-cara-kerja-web-server-dan-server-side-scripting%e2%80%8b">
+                            22. jelaskan cara kerja web server dan server Side scripting​</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Cara Kerja dari Layanan Web Server</p><p>Secara sederhana tugas web server ialah menerima permintaan yang berasal dari klien kemudian mengirimkannya kembali dalam bentuk berkas kepada si klien tersebut. Perangkat lunak pada web server terdapat di komputer server dimana merupakan tempat menyimpan data-data website. Disamping itu, komputer server membutuhkan akses internet agar tetap terhubung sehingga dapat diakses oleh klien.</p><p></p><p>Server-side</p><p>Server-side adalah bahasa pemrograman web yang pengolahan datanya dilakukan oleh komputer server/penyedia. Jadi, setiap kali sebuah web dikunjungi, server akan mengirimkan data-data yang diminta dari database yang kemudian akan ditampilkan di web.</p><p><strong>Penjelasan:</strong></p><p>semoga membantu!</p><p></p><br />
+                                            <h2 class="ez-toc-section" id="buat-pesan-untuk-driver-gojek-tentang-ramah-minimal-5-baris%e2%80%8b">
+                            23. buat pesan untuk driver gojek tentang (ramah) minimal 5 baris​</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Selamat siang pak</p><p>Pesanannya sesuai aplikasi ya pak</p><p>Alamatnya seperti yang di aplikasi ya pak, jika kurang jelas bisa di hubungi saya, jika sudah dekat.</p><p>Terima kasih ya pak</p><p><strong>Penjelasan:</strong></p><p></p><br />
+                                            <h2 class="ez-toc-section" id="tuliskan-bagaimana-cara-kerja-driver">
+                            24. Tuliskan bagaimana cara kerja driver</h2><br />
+                        Sistem oprasi nya <br />menghapus file <br />membuat file<br />sinkronisasi antar file <br />Komunikasi antar file dan melakukan penundaan proses/menghentikan proses secara paksa <br /><br /><br />  :)<br />   :) <br /><br /><br /><br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-dns-server">
+                            25. cara kerja DNS SERVER</h2><br />
+                        Mencari alamat host pada file host, jika ada alamat maka akan diproses sampai selesai<br />Mencari data cache yang sudah dibuat oleh resolver agar bisa menyimpan hasil dari permintaan.<br />Mencari di alamat server DNS pertama yang sudah ditentukan oleh user.<br />Apabila DNS server yang pertama tidak dapat ditemukan makan DNS server selanjutnya akan meneruskan dengan Proses yang sama Mencari alamat host pada file host, jika ada alamat maka akan diproses sampai selesai<br />. Mencari data cache yang sudah dibuat oleh resolver agar bisa menyimpan hasil dari permintaan.<br />. Mencari di alamat server DNS pertama yang sudah ditentukan oleh user.<br />. Apabila DNS server yang pertama tidak dapat ditemukan makan DNS server selanjutnya akan meneruskan dengan proses yang sama.<br /><br />maaf klw kurang tepat jawabannya<br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-admin-server">
+                            26. bagaimana cara kerja admin server</h2><br />
+                        Seoarang admin server tidak bekerja sendirian, biasanya mereka membentuk sebuah team. Sangat mustahil hanya terdapat 1 admin server dalam sebuah perusahaan besar, dikarenakan menjadi admin server itu sangatlah sulit dan beresiko.<br /><br />Seorang admin server tidak hanya bekerja dengan rekannya saja. Mereka juga bekerja sama dengan pekerja lainnya seperti supervisor, hingga pekerja teknik. Selain itu, sebagai seorang admin server harus pandai berbicara dikarenakan admin server juga harus dapat menjelaskan berbagai hal-hal teknis kepada orang awam. Admin server merupakan orang yang mengatur semua aktifitas server, mulai dari awal dibangun, perawatan sampai perbaikan.<br /><br />Perlu anda ketahui bahwa menjadi admin server bukan perkara yang mudah. Admin server dituntut untuk merawat dan menjaga kinerja server agar tetap berjalan dengan baik. Dalam sebuah perusahaan, peran admin server sangatlah penting.<br /><br />Admin server mempunyai 3 tugas utama seperti membangun, mengelola, dan memperbaiki server. Ketiga tugas itulah yang “wajib” dilakukan seorang admin server untuk menjaga server tetap berjalan dengan baik.<br /><br />tugas dan tanggung jawab admin server<br /><br />Seoarang admin server tidak bekerja sendirian, biasanya mereka membentuk sebuah team. Sangat mustahil hanya terdapat 1 admin server dalam sebuah perusahaan besar, dikarenakan menjadi admin server itu sangatlah sulit dan beresiko.<br /><br />Seorang admin server tidak hanya bekerja dengan rekannya saja. Mereka juga bekerja sama dengan pekerja lainnya seperti supervisor, hingga pekerja teknik. Selain itu, sebagai seorang admin server harus pandai berbicara dikarenakan admin server juga harus dapat menjelaskan berbagai hal-hal teknis kepada orang awam. Baca juga mengenai <br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-mail-server%e2%80%8b">
+                            27. cara kerja mail server​</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Cara Kerja Mail Server</p><p>Bagaimana cara pengiriman dan penerimaan email? Secara sederhana cara kerja mail server dapat dijelaskan sebagai berikut. Awalnya email-email yang dikirim oleh pengirim akan disimpan dalam database mail server. Dalam email yang dikirim, tentu terdapat informasi tentang tujuan penerima email dan asal pengirim, serta waktu pengiriman. Saat penerima membaca email tersebut, artinya penerima telah mengakses mail server dan membaca email yang tersimpan dalam database mail server melalui aplikasi ataupun browser.</p><br />
+                                            <h2 class="ez-toc-section" id="bagaimana-cara-kerja-web-server-dan-apa-saja-yang-bisa-dilakukan-oleh-e-mail-server">
+                            28. Bagaimana cara kerja web server dan apa saja yang bisa dilakukan oleh E - mail server </h2><br />
+                        <p><strong>Jawaban:</strong></p><p>Sederhananya tugas <strong>web server</strong> adalah untuk menerima permintaan dari klien dan mengirimkan kembali berkas yang diminta oleh klien tersebut. Perangkat lunak web server terdapat pada komputer server, dan di komputer ini pula data-data website tersimpan dengan rapih.</p><p></p><p>Yang bisa dilakukan oleh <strong>Email Server</strong> sebenarnya banyak dan tentu saja jika developer ingin membuat suatu fitur maka mereka tinggal menambahkan beberapa kode yang nantinya fungsinya sesuai yang mereka harapkan. Beberapa yang dapat dilakukan sebuah server email adalah mengirim &amp; menerima email, meneruskan email dari 1 pengguna ke pengguna lainnya, dan juga yang sekarang sudah umum dan masih terus ditingkatkan adalah <strong>Spam Protection</strong> dimana server otomatis memisahkan email yang dinilai sebagai email spam menurut respon kebanyakan pengguna.</p><p>Mungkin ke depannya akan ditambahkan fungsi untuk keamanan dari virus, spyware, malware, dsb. yang akan sangat membantu pengguna supaya tetap aman.</p><p></p><br />
+                                            <h2 class="ez-toc-section" id="apa-itu-driver-motor-dan-bagaimana-cara-kerjanya%e2%80%8b">
+                            29. apa itu driver motor dan bagaimana cara kerjanya​</h2><br />
+                        <p><strong>Jawaban:</strong></p><p>kerjanya naik motor dong</p><p><strong>Jawaban:</strong></p><p>driver motor adalah orang yang bekerja sebagai tukang ojek/pengendara motor untuk mencari nafkah ataupun sebagainnya</p><p></p><p>cara kerjanya itu kita bisa memesan/order ojek itu lewat aplikasi, bisa juga kita naik driver motor offline kaya misalnya ojek</p><p>nanti kita bilang aja mau turun dimana gitu deh </p><br />
+                                            <h2 class="ez-toc-section" id="cara-kerja-dhcp-server-dan-kelebihan-dhcp-server-serta-script">
+                            30. Cara kerja DHCP SERVER !
+Dan kelebihan DHCP SERVER , serta script !</h2><br />
+                        Kelebihan DHCP Server:<br />&gt; Memudahkan dalam transfer data kepada PC client lain atau PC server.<br />&gt; DHCP menyediakan alamat-alamat IP secara dinamis dan konfigurasi lain. DHCP ini didesain untuk melayani network yang besar dan konfigurasi TCP/IP yang kompleks.<br />&gt; DHCP memungkinkan suatu client menggunakan alamat IP yang reusable, artinya alamat IP tersebut bisa dipakai oleh client yang lain jika client tersebut tidak sedang menggunakannya (off).<br /><br />Script DHCP yang saya miliki untuk praktek di sekolah:<br /><br />-----------DHCP SERVER--------------<br /> #apt-cdrom add <br />#init 6 <br /><br />#apt-get install isc-dhcp-server <br />#nano /etc/dhcp/dhcpd.conf (hilangkan pagar yang akan di aktifkan)<br />#nano /etc/default/isc-dhcp-server (masukan eth berapa yg digunakan)<br />#service isc-dhcp-server restart <br /><br />#apt-get install ssh <br />#chmod 777 /var/www <br /><br />
+                    
+                </div>
+                <div class="youtubeVideo" style="text-align: center">
+                    <h3>Video Terkait</h3>
+                    <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/kz9FuzYSsLw?controls=0" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"allowfullscreen></iframe>
+                </div>
+                <footer class="entry-meta" aria-label="Meta postingan">
+                    <span class="cat-links"><span class="gp-icon icon-categories"><svg viewBox="0 0 512 512"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                                <path
+                                    d="M0 112c0-26.51 21.49-48 48-48h110.014a48 48 0 0143.592 27.907l12.349 26.791A16 16 0 00228.486 128H464c26.51 0 48 21.49 48 48v224c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V112z">
+                                </path>
+                            </svg></span><span class="screen-reader-text">Kategori </span>b_indonesia</span>
+            </div>
+        </article>
+    </main>
+            </div>
+            <div class="widget-area sidebar is-right-sidebar" id="right-sidebar">
+                <div class="inside-right-sidebar">
+                    <aside id="categories-2" class="widget inner-padding widget_categories">
+                        <h2 class="widget-title">Topik</h2>
+                        <ul>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/organisasi-putera-dibubarkan-jepang-karena.html">Organisasi Putera Dibubarkan Jepang Karena</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/limbah-bangun-datar.html">Limbah Bangun Datar</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/lama-waktu-pertandingan-sepakbola-adalah.html">Lama Waktu Pertandingan Sepakbola Adalah</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/kemampuan-persendian-untuk-bergerak-secara-luas-merupakan-arti-dari.html">Kemampuan Persendian Untuk Bergerak Secara Luas Merupakan Arti Dari</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/fungsi-dan-peranan-seni-tari.html">Fungsi Dan Peranan Seni Tari</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/sebutkan-9-wali-songo.html">Sebutkan 9 Wali Songo</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/bagaimana-sebaiknya-ungkapan-reklame.html">Bagaimana Sebaiknya Ungkapan Reklame</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/amor-ring-acintya-artinya.html">Amor Ring Acintya Artinya</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/php-ini-location-ubuntu.html">Php Ini Location Ubuntu</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/perbedaan-sejarah-dengan-mitos.html">Perbedaan Sejarah Dengan Mitos</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/apa-yang-dimaksud-dengan-drawing-template.html">Apa Yang Dimaksud Dengan Drawing Template</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/alat-pernapasan-belalang-adalah.html">Alat Pernapasan Belalang Adalah</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/sin-75-derajat-sin-15-derajat.html">Sin 75 Derajat Sin 15 Derajat</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/perbedaan-opera-mini-dan-opera-browser.html">Perbedaan Opera Mini Dan Opera Browser</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/teks-prosedur-cara-membuat-susu-dalam-bahasa-inggris.html">Teks Prosedur Cara Membuat Susu Dalam Bahasa Inggris</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/apa-yang-dimaksud-gerak-peristaltik.html">Apa Yang Dimaksud Gerak Peristaltik</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/contoh-kerajinan-deformasi.html">Contoh Kerajinan Deformasi</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/bagian-bagian-puisi-dan-contohnya.html">Bagian Bagian Puisi Dan Contohnya</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/jelaskan-teori-teori-mengenai-masuknya-hindu-budha-di-kepulauan-indonesia.html">Jelaskan Teori Teori Mengenai Masuknya Hindu Budha Di Kepulauan Indonesia</a>
+                                </li>
+                                                            <li class="cat-item cat-item-23"><a
+                                        href="https://pokokbelajar.github.io/proses-terjadinya-penyerbukan.html">Proses Terjadinya Penyerbukan</a>
+                                </li>
+                                                    </ul>
+
+                    </aside>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="site-footer">
+        <footer class="site-info" aria-label="Situs" itemtype="https://schema.org/WPFooter" itemscope>
+            <div class="inside-site-info grid-container">
+                <div class="copyright-bar">
+                    <span class="copyright">&copy; 2023 <a href="https://pokokbelajar.github.io"
+                            itemprop="url">BELAJAR</a></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <a title="Gulirkan kembali ke puncak laman" aria-label="Gulirkan kembali ke puncak laman" rel="nofollow"
+        href="#" class="generate-back-to-top" data-scroll-speed="400" data-start-scroll="300">
+        <span class="gp-icon icon-arrow-up"><svg viewBox="0 0 330 512" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill-rule="evenodd"
+                clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414">
+                <path
+                    d="M305.863 314.916c0 2.266-1.133 4.815-2.832 6.514l-14.157 14.163c-1.699 1.7-3.964 2.832-6.513 2.832-2.265 0-4.813-1.133-6.512-2.832L164.572 224.276 53.295 335.593c-1.699 1.7-4.247 2.832-6.512 2.832-2.265 0-4.814-1.133-6.513-2.832L26.113 321.43c-1.699-1.7-2.831-4.248-2.831-6.514s1.132-4.816 2.831-6.515L158.06 176.408c1.699-1.7 4.247-2.833 6.512-2.833 2.265 0 4.814 1.133 6.513 2.833L303.03 308.4c1.7 1.7 2.832 4.249 2.832 6.515z"
+                    fill-rule="nonzero" />
+            </svg></span>
+    </a>
+    <script id="generate-a11y">
+        ! function() {
+            "use strict";
+            if ("querySelector" in document && "addEventListener" in window) {
+                var e = document.body;
+                e.addEventListener("mousedown", function() {
+                    e.classList.add("using-mouse")
+                }), e.addEventListener("keydown", function() {
+                    e.classList.remove("using-mouse")
+                })
+            }
+        }();
+    </script>
+    <!--[if lte IE 11]>
+<script src='https://pokokbelajar.github.io/js/classList.min.js' ?ver=3.2.4' id='generate-classlist-js'></script>
+<![endif]-->
+    <script id='generate-menu-js-extra'>
+        var generatepressMenu = {
+            "toggleOpenedSubMenus": "1",
+            "openSubMenuLabel": "Buka Submenu",
+            "closeSubMenuLabel": "Tutup submenu"
+        };
+    </script>
+    <script src='https://pokokbelajar.github.io/js/menu.min.js' ?ver=3.2.4' id='generate-menu-js'></script>
+    <script id='generate-navigation-search-js-extra'>
+        var generatepressNavSearch = {
+            "open": "Buka Kolom Pencarian",
+            "close": "Tutup Kolom Pencarian"
+        };
+    </script>
+    <script src='https://pokokbelajar.github.io/js/navigation-search.min.js' ?ver=3.2.4' id='generate-navigation-search-js'></script>
+    <script id='generate-back-to-top-js-extra'>
+        var generatepressBackToTop = {
+            "smooth": "1"
+        };
+    </script>
+    <script src='https://pokokbelajar.github.io/js/back-to-top.min.js' ?ver=3.2.4' id='generate-back-to-top-js'></script>
+    <script type='text/javascript' src='//jd3j7g5z1fqs.com/96/78/7a/96787a1945876b1a9c10f79941441964.js'></script>
+<script type='text/javascript' src='//jd3j7g5z1fqs.com/b4/f1/ef/b4f1ef8dfe59b7fa68754094cf6c8e0e.js'></script>
+  <!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4739059,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4739059&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+</body>
+
+</html>
